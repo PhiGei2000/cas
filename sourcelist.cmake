@@ -1,3 +1,3 @@
 SET(SOURCES ${SOURCES}
     src/main.cpp
-    src/expressions/expression.cpp)
+    src/math/expressions.cpp)

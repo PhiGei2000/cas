@@ -1,8 +1,8 @@
-#include "expressions/expression.hpp"
+#include "math/expressions.hpp"
 
 #include <math.h>
 
-namespace cas::expressions
+namespace cas::math
 {
 Constant::Constant(double value)
     : value(value) {
@@ -14,6 +14,10 @@ double Constant::getValue() const {
 
 Expression* Constant::copy() const {
     return new Constant(value);
+}
+
+std::string Constant::toString() const {
+    return std::to_string(value);
 }
 
 Variable::Variable(char character)
@@ -45,6 +49,10 @@ Expression* Variable::copy() const {
     return new Variable(character, *value);
 }
 
+std::string Variable::toString() const {
+    return std::string(1, character);
+}
+
 BinaryExpression::BinaryExpression(const Expression& left, const Expression& right) {
     this->left = left.copy();
     this->right = right.copy();
@@ -73,6 +81,10 @@ Expression* Addition::copy() const {
     return new Addition(*left, *right);
 }
 
+std::string Addition::toString() const {
+    return left->toString() + " + " + right->toString();
+}
+
 #pragma endregion
 
 #pragma region Multiplication
@@ -86,6 +98,10 @@ double Multiplication::getValue() const {
 
 Expression* Multiplication::copy() const {
     return new Multiplication(*left, *right);
+}
+
+std::string Multiplication::toString() const {
+    return left->toString() + " * " + right->toString();
 }
 
 #pragma endregion
@@ -102,23 +118,30 @@ double Exponentiation::getValue() const {
 Expression* Exponentiation::copy() const {
     return new Exponentiation(*left, *right);
 }
+
+std::string Exponentiation::toString() const {
+    return left->toString() + " ^ " + right->toString();
+}
+
 #pragma endregion
 
 #pragma region operators
-Expression* operator+(const Expression& left, const Expression& right) {
-    return new Addition(left, right);
+Addition operator+(const Expression& left, const Expression& right) {
+    return Addition(left, right);
 }
 
-Expression* operator-(const Expression& left, const Expression& right) {
-    return new Addition(left, Multiplication(Constant(-1), right));
+Addition operator-(const Expression& left, const Expression& right) {
+    return Addition(left, Multiplication(Constant(-1), right));
 }
 
-Expression* operator*(const Expression& left, const Expression& right) {
-    return new Multiplication(left, right);
+Multiplication operator*(const Expression& left, const Expression& right) {
+    return Multiplication(left, right);
 }
 
-Expression* operator/(const Expression& left, const Expression& right) {
-    return new Multiplication(left, Exponentiation(right, Constant(-1)));
+Multiplication operator/(const Expression& left, const Expression& right) {
+    return Multiplication(left, Exponentiation(right, Constant(-1)));
 }
+
+#pragma endregion
 
 } // namespace cas::expressions

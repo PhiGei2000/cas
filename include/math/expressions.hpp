@@ -1,12 +1,16 @@
 #pragma once
 
-namespace cas::expressions
+#include <string>
+
+namespace cas::math
 {
 
 class Expression {
   public:
     virtual double getValue() const = 0;
     virtual Expression* copy() const = 0;
+
+    virtual std::string toString() const = 0;
 };
 
 class Constant : public Expression {
@@ -17,7 +21,9 @@ class Constant : public Expression {
     Constant(double value);    
 
     virtual double getValue() const override;
-    virtual Expression* copy() const override;    
+    virtual Expression* copy() const override; 
+
+    virtual std::string toString() const override;
 };
 
 class Variable : public Expression {
@@ -34,6 +40,8 @@ class Variable : public Expression {
 
     virtual double getValue() const override;
     virtual Expression* copy() const override;
+
+    virtual std::string toString() const override;
 };
 
 class BinaryExpression : public Expression {
@@ -52,6 +60,8 @@ class Addition : public BinaryExpression {
 
     virtual double getValue() const override;
     virtual Expression* copy() const override;
+
+    virtual std::string toString() const override;
 };
 
 class Multiplication : public BinaryExpression {
@@ -60,6 +70,8 @@ class Multiplication : public BinaryExpression {
 
     virtual double getValue() const override;
     virtual Expression* copy() const override;
+
+    virtual std::string toString() const override;
 };
 
 class Exponentiation : public BinaryExpression {
@@ -68,11 +80,13 @@ class Exponentiation : public BinaryExpression {
 
     virtual double getValue() const override;
     virtual Expression* copy() const override;
+
+    virtual std::string toString() const override;
 };
 
-Expression* operator+(const Expression& left, const Expression& right);
-Expression* operator-(const Expression& left, const Expression& right);
-Expression* operator*(const Expression& left, const Expression& right);
-Expression* operator/(const Expression& left, const Expression& right);
+Addition operator+(const Expression& left, const Expression& right);
+Addition operator-(const Expression& left, const Expression& right);
+Multiplication operator*(const Expression& left, const Expression& right);
+Multiplication operator/(const Expression& left, const Expression& right);
 
 } // namespace cas::expressions
