@@ -1,9 +1,11 @@
 #include "math/expressions.hpp"
 
 #include <math.h>
+#include <stdexcept>
 
 namespace cas::math
 {
+
 Constant::Constant(double value)
     : value(value) {
 }
@@ -13,7 +15,15 @@ double Constant::getValue() const {
 }
 
 Expression* Constant::copy() const {
-    return new Constant(value);
+    return new Constant(*this);
+}
+
+constexpr ExpressionType Constant::getType() const {
+    return ExpressionType::Constant;
+}
+
+bool Constant::dependsOn(const Variable& var) const {
+    return false;
 }
 
 std::string Constant::toString() const {
@@ -24,29 +34,24 @@ Variable::Variable(char character)
     : character(character) {
 }
 
-Variable::Variable(char character, const Expression& value)
-    : character(character) {
-    this->value = value.copy();
-}
-
 char Variable::getCharacter() const {
     return character;
 }
 
-void Variable::assign(const Expression& value) {
-    this->value = value.copy();
+bool Variable::dependsOn(const Variable& var) const {
+    return character == var.character;
 }
 
 double Variable::getValue() const {
-    return value->getValue();
+    throw std::runtime_error("Cannot get value of a variable");
 }
 
 Expression* Variable::copy() const {
-    if (value == nullptr) {
-        return new Variable(character);
-    }
+    return new Variable(*this);
+}
 
-    return new Variable(character, *value);
+constexpr ExpressionType Variable::getType() const {
+    return ExpressionType::Variable;
 }
 
 std::string Variable::toString() const {
@@ -59,13 +64,12 @@ BinaryExpression::BinaryExpression(const Expression& left, const Expression& rig
 }
 
 BinaryExpression::~BinaryExpression() {
-    if (left != nullptr) {
-        delete left;
-    }
+    delete left;
+    delete right;
+}
 
-    if (right != nullptr) {
-        delete right;
-    }
+bool BinaryExpression::dependsOn(const Variable& var) const {
+    return left->dependsOn(var) || right->dependsOn(var);
 }
 
 #pragma region Addition
@@ -78,7 +82,11 @@ double Addition::getValue() const {
 }
 
 Expression* Addition::copy() const {
-    return new Addition(*left, *right);
+    return new Addition(*this);
+}
+
+constexpr ExpressionType Addition::getType() const {
+    return ExpressionType::Addition;
 }
 
 std::string Addition::toString() const {
@@ -97,7 +105,11 @@ double Multiplication::getValue() const {
 }
 
 Expression* Multiplication::copy() const {
-    return new Multiplication(*left, *right);
+    return new Multiplication(*this);
+}
+
+constexpr ExpressionType Multiplication::getType() const {
+    return ExpressionType::Multiplication;
 }
 
 std::string Multiplication::toString() const {
@@ -116,7 +128,11 @@ double Exponentiation::getValue() const {
 }
 
 Expression* Exponentiation::copy() const {
-    return new Exponentiation(*left, *right);
+    return new Exponentiation(*this);
+}
+
+constexpr ExpressionType Exponentiation::getType() const {
+    return ExpressionType::Exponentiation;
 }
 
 std::string Exponentiation::toString() const {
@@ -144,4 +160,4 @@ Multiplication operator/(const Expression& left, const Expression& right) {
 
 #pragma endregion
 
-} // namespace cas::expressions
+} // namespace cas::math
