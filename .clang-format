@@ -7,7 +7,7 @@
     AfterEnum: false
     AfterControlStatement: false
     AfterFunction: false
-    AfterNamespace: true
+    AfterNamespace: false
     AfterStruct: false
     AfterUnion: false
     AfterExternBlock: false
@@ -19,7 +19,7 @@
  AllowShortLambdasOnASingleLine: All
  BreakStringLiterals: false
  ColumnLimit: 0
- NamespaceIndentation: Inner
+ NamespaceIndentation: All
  SpacesInAngles: false
  SpaceAfterTemplateKeyword: false
  AlwaysBreakTemplateDeclarations: No
