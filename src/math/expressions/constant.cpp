@@ -9,10 +9,6 @@ namespace cas::math {
         return value;
     }
 
-    Expression* Constant::copy() const {
-        return new Constant(*this);
-    }
-
     ExpressionType Constant::getType() const {
         return ExpressionType::Constant;
     }

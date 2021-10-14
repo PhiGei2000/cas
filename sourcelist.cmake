@@ -1,4 +1,5 @@
 SET(SOURCES ${SOURCES}
+./src/engine.cpp
 ./src/main.cpp
 ./src/math/expressions/multiplication.cpp
 ./src/math/expressions/constant.cpp

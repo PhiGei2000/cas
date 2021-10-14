@@ -3,16 +3,8 @@
 #include <math.h>
 
 namespace cas::math {
-    Exponentiation::Exponentiation(const Expression& left, const Expression& right)
-        : BinaryExpression(left, right) {
-    }
-
     double Exponentiation::getValue() const {
         return pow(left->getValue(), right->getValue());
-    }
-
-    Expression* Exponentiation::copy() const {
-        return new Exponentiation(*this);
     }
 
     ExpressionType Exponentiation::getType() const {

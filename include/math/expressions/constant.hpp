@@ -12,7 +12,7 @@ struct Constant : public Expression {
     Constant(double value);
 
     virtual double getValue() const override;
-    virtual Expression* copy() const override;
+    
     virtual ExpressionType getType() const override;
 
     virtual bool dependsOn(const Variable& var) const override;

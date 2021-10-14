@@ -2,18 +2,16 @@
 
 #include "expression.hpp"
 
-namespace cas::math
-{
+namespace cas::math {
 
-struct BinaryExpression : public Expression {
-  public:
-    Expression* left = nullptr;
-    Expression* right = nullptr;
+    struct Term;
 
-    BinaryExpression(const Expression& left, const Expression& right);
-    ~BinaryExpression();
+    struct BinaryExpression : public Expression {
+      public:
+        Expression* left;
+        Expression* right;
 
-    virtual bool dependsOn(const Variable& var) const override;
-};
+        virtual bool dependsOn(const Variable& var) const override;
+    };
 
 } // namespace cas::math
