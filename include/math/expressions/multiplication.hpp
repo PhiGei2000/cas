@@ -6,8 +6,6 @@ namespace cas::math {
 
     struct Multiplication : public BinaryExpression {
       public:
-        Multiplication(const Expression& left, const Expression& right);
-
         virtual double getValue() const override;
 
         virtual ExpressionType getType() const override;

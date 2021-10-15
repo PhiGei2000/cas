@@ -2,20 +2,20 @@
 
 namespace cas::math
 {
-Addition operator+(const Expression& left, const Expression& right) {
-    
+Addition* operator+(Expression& left, Expression& right) {
+    return left.add(&right);
 }
 
-Addition operator-(const Expression& left, const Expression& right) {
-    
+Addition* operator-(Expression& left, Expression& right) {
+    return left.add(right.multiply(new Constant(-1)));
 }
 
-Multiplication operator*(const Expression& left, const Expression& right) {
-    
+Multiplication* operator*(Expression& left, Expression& right) {
+    return left.multiply(&right);
 }
 
-Multiplication operator/(const Expression& left, const Expression& right) {
-    
+Multiplication* operator/(Expression& left, Expression& right) {
+    return left.multiply(right.pow(new Constant(-1)));
 }
 
 } // namespace cas::math

@@ -11,6 +11,10 @@ int main(int argCnt, char** args) {
 
     auto result = c1 * c2;
 
-    std::cout << result.toString() << " = " << result.getValue() << std::endl;
+    std::cout << result->toString() << " = " << result->getValue() << std::endl;
+    
+    delete result;
+
+    return 0;
 }
 

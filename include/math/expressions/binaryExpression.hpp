@@ -11,6 +11,8 @@ namespace cas::math {
         Expression* left;
         Expression* right;
 
+        ~BinaryExpression();
+
         virtual bool dependsOn(const Variable& var) const override;
     };
 

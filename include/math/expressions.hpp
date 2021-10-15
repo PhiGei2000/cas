@@ -7,8 +7,8 @@
 #include "expressions/variable.hpp"
 
 namespace cas::math {
-    Addition operator+(const Expression& left, const Expression& right);
-    Addition operator-(const Expression& left, const Expression& right);
-    Multiplication operator*(const Expression& left, const Expression& right);
-    Multiplication operator/(const Expression& left, const Expression& right);
+    Addition* operator+(Expression& left, Expression& right);
+    Addition* operator-(Expression& left, Expression& right);
+    Multiplication* operator*(Expression& left, Expression& right);
+    Multiplication* operator/(Expression& left, Expression& right);
 } // namespace cas::math

@@ -2,9 +2,14 @@
 
 #include <math.h>
 
+template<typename T>
+T mathPow(T a, T b) {
+    return pow(a, b);
+}
+
 namespace cas::math {
     double Exponentiation::getValue() const {
-        return pow(left->getValue(), right->getValue());
+        return mathPow(left->getValue(), right->getValue());
     }
 
     ExpressionType Exponentiation::getType() const {
