@@ -11,6 +11,8 @@ namespace cas::math {
         virtual ExpressionType getType() const override;        
 
         virtual std::string toString() const override;
+
+        virtual bool equals(Expression* other) const override;
     };
 
 } // namespace cas::math

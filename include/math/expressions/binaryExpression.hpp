@@ -4,8 +4,6 @@
 
 namespace cas::math {
 
-    struct Term;
-
     struct BinaryExpression : public Expression {
       public:
         Expression* left;
@@ -14,6 +12,10 @@ namespace cas::math {
         ~BinaryExpression();
 
         virtual bool dependsOn(const Variable& var) const override;
+
+        virtual bool hasValue() const override;
+
+        virtual bool equals(Expression* other) const override;
     };
 
 } // namespace cas::math

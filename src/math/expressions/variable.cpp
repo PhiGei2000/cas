@@ -28,4 +28,18 @@ namespace cas::math {
         return std::string(1, character);
     }
 
+    bool Variable::equals(Expression* expr) const {
+        if (expr->getType() == ExpressionType::Variable) {
+        Variable* var = reinterpret_cast<Variable*>(expr);
+            
+            return var->character == character;
+        }
+
+        return false;
+    }
+
+    bool Variable::hasValue() const {
+        return false;
+    }
+
 } // namespace cas::math

@@ -10,5 +10,5 @@ namespace cas::math {
     Addition* operator+(Expression& left, Expression& right);
     Addition* operator-(Expression& left, Expression& right);
     Multiplication* operator*(Expression& left, Expression& right);
-    Multiplication* operator/(Expression& left, Expression& right);
+    Multiplication* operator/(Expression& left, Expression& right);    
 } // namespace cas::math

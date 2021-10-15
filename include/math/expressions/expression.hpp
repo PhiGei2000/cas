@@ -1,6 +1,8 @@
 #pragma once
 
+#include <map>
 #include <string>
+#include <typeindex>
 
 namespace cas::math {
     enum class ExpressionType
@@ -21,6 +23,8 @@ namespace cas::math {
       private:
         bool heap = false;
 
+        static std::map<std::type_index, ExpressionType> expressionTypeMappings;
+
       public:
         Addition* add(Expression* other);
         Multiplication* multiply(Expression* other);
@@ -32,11 +36,18 @@ namespace cas::math {
 
         virtual bool dependsOn(const Variable& var) const = 0;
 
-        virtual std::string toString() const = 0;        
+        virtual std::string toString() const = 0;
 
         template<typename T>
         static T* create();
 
+        // template<typename T>
+        // static bool convert(Expression* in, T* out);
+
         void operator delete(void* ptr);
+
+        virtual bool equals(Expression* other) const = 0;
+
+        virtual bool hasValue() const = 0;
     };
 } // namespace cas::math

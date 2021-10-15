@@ -3,21 +3,25 @@
 #include "expression.hpp"
 
 namespace cas::math {
-    
-struct Constant : public Expression {
-  protected:
-    double value;
 
-  public:
-    Constant(double value);
+    struct Constant : public Expression {
+      protected:
+        double value;
 
-    virtual double getValue() const override;
-    
-    virtual ExpressionType getType() const override;
+      public:
+        Constant(double value);
 
-    virtual bool dependsOn(const Variable& var) const override;
+        virtual double getValue() const override;
 
-    virtual std::string toString() const override;
-};
+        virtual ExpressionType getType() const override;
 
-}
+        virtual bool dependsOn(const Variable& var) const override;
+
+        virtual std::string toString() const override;
+
+        virtual bool equals(Expression* expr) const override;
+
+        virtual bool hasValue() const override;
+    };
+
+} // namespace cas::math

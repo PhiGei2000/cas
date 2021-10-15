@@ -14,4 +14,16 @@ namespace cas::math {
         return left->toString() + " + " + right->toString();
     }
 
+    bool Addition::equals(Expression* other) const {
+        if (other->getType() == ExpressionType::Addition) {
+            Addition* addition = reinterpret_cast<Addition*>(other);
+
+            return left->equals(addition->left) && right->equals(addition->right)
+                       ? true
+                       : right->equals(addition->left) && left->equals(addition->right);
+        }
+
+        return false;
+    }
+
 } // namespace cas::math

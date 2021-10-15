@@ -21,4 +21,14 @@ namespace cas::math {
         return std::to_string(value);
     }
 
+    bool Constant::equals(Expression* expr) const {
+        return expr->hasValue()
+                   ? expr->getValue() == value
+                   : false;        
+    }
+
+    bool Constant::hasValue() const {
+        return true;
+    }
+
 } // namespace cas::math

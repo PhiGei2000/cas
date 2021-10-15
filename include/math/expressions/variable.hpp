@@ -20,6 +20,10 @@ struct Variable : public Expression {
     virtual ExpressionType getType() const override;
 
     virtual std::string toString() const override;
+
+    virtual bool equals(Expression* expr) const override;
+    
+    virtual bool hasValue() const override;
 };
 
 }
