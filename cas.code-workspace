@@ -75,7 +75,9 @@
 			"thread": "cpp",
 			"cinttypes": "cpp",
 			"typeinfo": "cpp",
-			"variant": "cpp"
-		}
+			"variant": "cpp",
+			"typeindex": "cpp"
+		},
+		"editor.formatOnType": true		
 	}
 }
