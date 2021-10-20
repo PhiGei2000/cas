@@ -9,6 +9,10 @@ namespace cas::math {
 
         bool equals(Term* other) const override;
 
+        virtual Term* copy() const override;
+
         std::string toString() const override;
+
+        virtual void simplify() override;
     };
 }

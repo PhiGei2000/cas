@@ -45,24 +45,11 @@ namespace cas::math {
 
     template<typename T>
     T* Expression::create() {
-        T* expr = new T();        
+        T* expr = new T();
 
         expr->heap = true;
         return expr;
     }
-
-    // template<typename T>
-    // bool Expression::convert(Expression* in, T* out) {
-    //     std::type_index type = typeid(T);
-
-    //     // TODO: Fix this (segmentation fault)
-    //     bool canConvert = expressionTypeMappings.find(type) != expressionTypeMappings.end() ? in->getType() == expressionTypeMappings[type] : false;
-    //     if (canConvert) {
-    //         out = reinterpret_cast<T*>(in);
-    //     }
-
-    //     return canConvert;
-    // }
 
     void Expression::operator delete(void* ptr) {
         Expression* expr = reinterpret_cast<Expression*>(ptr);
@@ -72,6 +59,4 @@ namespace cas::math {
         }
     }
 
-    // template bool Expression::convert<Variable>(Expression*, Variable*);
-    // template bool Expression::convert<Addition>(Expression*, Addition*);
 } // namespace cas::math

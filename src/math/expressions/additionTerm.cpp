@@ -1,5 +1,7 @@
 #include "math/expressions/additionTerm.hpp"
 
+#include "math/expressions/constantTerm.hpp"
+
 namespace cas::math {
     AdditionTerm::AdditionTerm(const std::initializer_list<Term*>& summands)
         : OperationTerm(ExpressionType::Addition, summands) {
@@ -41,6 +43,16 @@ namespace cas::math {
         return false;
     }
 
+    Term* AdditionTerm::copy() const {
+        AdditionTerm* addition = new AdditionTerm({});
+
+        for (const Term* term : subterms) {
+            addition->addSubterm(term->copy());
+        }
+
+        return addition;
+    }
+
     std::string AdditionTerm::toString() const {
         std::string result;
 
@@ -52,5 +64,11 @@ namespace cas::math {
         }
 
         return result;
+    }
+
+    void AdditionTerm::simplify() {
+        OperationTerm::simplifySubterms(
+            [&](double curr, double next) { return curr + next; },
+            0);
     }
 } // namespace cas::math

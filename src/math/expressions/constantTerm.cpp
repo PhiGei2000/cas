@@ -19,6 +19,10 @@ namespace cas::math {
         return false;
     }
 
+    Term* ConstantTerm::copy() const {
+        return new ConstantTerm(value);
+    }
+
     std::string ConstantTerm::toString() const {
         std::stringstream ss;
         ss << value;

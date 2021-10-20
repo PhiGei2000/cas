@@ -12,6 +12,8 @@ namespace cas::math {
 
         virtual bool equals(Term* other) const override;
 
+        virtual Term* copy() const override;
+
         virtual std::string toString() const override;
     };
 } // namespace cas::math

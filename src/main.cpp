@@ -23,16 +23,16 @@ int main(int argCnt, char** args) {
     Variable v1 = 'x';
     Variable v2 = 'y';
 
-    auto s1 = (c1 * v1)->add(&v2);
-    auto s2 = (v2 * c1)->add(&v1);
+    auto s1 = (c1 + v1)->multiply(v2 + c2);
 
     Term* t1 = Simplifier::convertToTerm(s1);
     std::cout << t1->toString() << std::endl;
 
-    Term* t2 = Simplifier::convertToTerm(s2);
-    std::cout << t2->toString() << std::endl;
+    if (t1->hasSubterms()) {
+        reinterpret_cast<OperationTerm*>(t1)->simplify();
+    }
 
-    std::cout << "t1 == t2 ? " << t1->equals(t2) << std::endl;
+    std::cout << t1->toString() << std::endl;
 
     delete s1;
 

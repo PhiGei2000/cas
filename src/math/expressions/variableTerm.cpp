@@ -22,6 +22,10 @@ namespace cas::math {
         return false;
     }
 
+    Term* VariableTerm::copy() const {
+        return new VariableTerm(character);
+    }
+
     std::string VariableTerm::toString() const {
         std::string result;
 

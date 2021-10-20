@@ -41,13 +41,13 @@ namespace cas::math {
         template<typename T>
         static T* create();
 
-        // template<typename T>
-        // static bool convert(Expression* in, T* out);
-
-        void operator delete(void* ptr);
-
         virtual bool equals(Expression* other) const = 0;
 
         virtual bool hasValue() const = 0;
+
+        #pragma region Operators
+        void operator delete(void* ptr);
+        
+        #pragma endregion
     };
 } // namespace cas::math
