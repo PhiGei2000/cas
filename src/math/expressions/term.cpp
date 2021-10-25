@@ -25,6 +25,14 @@ namespace cas::math {
         return false;
     }
 
+    Term* Term::simplify() const {
+        return copy();
+    }
+
+    bool Term::operator==(Term* other) const {
+        return equals(other);
+    }
+
     void OperationTerm::checkSubterms() {
         auto it = subterms.begin();
 
@@ -41,6 +49,35 @@ namespace cas::math {
         }
 
         subterms.insert(subterms.end(), newSubterms.begin(), newSubterms.end());
+    }
+
+    std::vector<Term*> OperationTerm::simplifySubterms(std::function<double(double, double)> aggreate, double startValue) const {
+        std::vector<ConstantTerm*> constants;
+        std::vector<Term*> subterms;
+
+        for (auto it = this->subterms.begin(); it != this->subterms.end(); it++) {
+            Term* subterm = (*it)->simplify();
+
+            if (subterm->type == ExpressionType::Constant) {
+                constants.push_back(reinterpret_cast<ConstantTerm*>(subterm));
+            }
+            else {
+                subterms.push_back(subterm);
+            }
+        }
+
+        if (constants.size() > 0) {
+            ConstantTerm* result = new ConstantTerm(startValue);
+            for (auto constant : constants) {
+                result->value = aggreate(result->value, constant->value);
+
+                delete constant;
+            }
+
+            subterms.push_back(result);
+        }
+
+        return subterms;
     }
 
     bool OperationTerm::hasSubterms() const {
@@ -67,39 +104,6 @@ namespace cas::math {
         return subterms;
     }
 
-    void OperationTerm::simplifySubterms(std::function<double(double, double)> aggreate, double startValue) {
-        std::vector<ConstantTerm*> constants;
-
-        for (auto it = subterms.begin(); it != subterms.end();) {
-            Term* subterm = *it;
-            if (subterm->hasSubterms()) {
-                OperationTerm* opTerm = reinterpret_cast<OperationTerm*>(subterm);
-                opTerm->simplify();
-
-                // TODO: Change term type if there is only one subterm left
-            }
-
-            if (subterm->type == ExpressionType::Constant) {
-                constants.push_back(reinterpret_cast<ConstantTerm*>(subterm));
-                it = subterms.erase(it);
-            }
-            else {
-                it++;
-            }
-        }
-
-        if (constants.size() > 0) {
-            ConstantTerm* result = new ConstantTerm(startValue);
-            for (auto constant : constants) {
-                result->value = aggreate(result->value, constant->value);
-
-                delete constant;
-            }
-
-            subterms.push_back(result);
-        }
-    }
-
     Term* OperationTerm::operator[](int index) const {
         return subterms[index];
     }
@@ -110,9 +114,5 @@ namespace cas::math {
 
     std::vector<Term*>::iterator OperationTerm::end() {
         return subterms.end();
-    }
-
-    bool Term::operator==(Term* other) const {
-        return equals(other);
     }
 } // namespace cas::math

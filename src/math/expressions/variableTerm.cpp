@@ -1,7 +1,5 @@
 #include "math/expressions/variableTerm.hpp"
 
-#include "math/expressions/expression.hpp"
-
 namespace cas::math {
 
     VariableTerm::VariableTerm(char character)

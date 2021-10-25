@@ -66,9 +66,10 @@ namespace cas::math {
         return result;
     }
 
-    void AdditionTerm::simplify() {
-        OperationTerm::simplifySubterms(
-            [&](double curr, double next) { return curr + next; },
-            0);
+    Term* AdditionTerm::simplify() const {
+        std::vector<Term*> summands = OperationTerm::simplifySubterms(
+            [&](double curr, double next) { return curr + next; }, 0);
+
+        return new AdditionTerm(summands);
     }
 } // namespace cas::math

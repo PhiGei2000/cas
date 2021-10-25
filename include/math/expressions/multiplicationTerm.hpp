@@ -13,6 +13,6 @@ namespace cas::math {
 
         std::string toString() const override;
 
-        virtual void simplify() override;
+        virtual Term* simplify() const override;
     };
 }

@@ -1,7 +1,5 @@
 #include "math/expressions/constantTerm.hpp"
 
-#include "math/expressions/expression.hpp"
-
 #include <sstream>
 
 namespace cas::math {

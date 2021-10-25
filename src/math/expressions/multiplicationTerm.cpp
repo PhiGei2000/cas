@@ -74,9 +74,9 @@ namespace cas::math {
         return result;
     }
 
-    void MultiplicationTerm::simplify() {
+    Term* MultiplicationTerm::simplify() const {
         // simplify subterms
-        OperationTerm::simplifySubterms(
+        std::vector<Term*> subterms = OperationTerm::simplifySubterms(
             [&](double curr, double next) { return curr * next; },
             1);
 
@@ -127,5 +127,7 @@ namespace cas::math {
             result->simplify();
             subterms.push_back(result);
         }
+
+        return new MultiplicationTerm(subterms);
     }
 } // namespace cas::math

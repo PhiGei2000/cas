@@ -1,12 +1,14 @@
 #pragma once
 
-#include "expression.hpp"
-
 #include <string>
 #include <vector>
 #include <functional>
 
 namespace cas::math {
+    enum class ExpressionType {
+      Addition, Multiplication, Exponentiation, Constant, Variable
+    };
+
     struct Term {
       protected:
         // Term* parent = nullptr;
@@ -28,6 +30,8 @@ namespace cas::math {
 
         virtual Term* copy() const = 0;
 
+        virtual Term* simplify() const;
+
         bool operator==(Term* other) const;
     };
 
@@ -36,7 +40,7 @@ namespace cas::math {
         std::vector<Term*> subterms;
 
         void checkSubterms();
-        void simplifySubterms(std::function<double(double, double)> aggreate, double startValue);
+        std::vector<Term*> simplifySubterms(std::function<double(double, double)> aggreate, double startValue) const;
 
       public:
         OperationTerm(ExpressionType type, const std::initializer_list<Term*>& subterms);
@@ -48,7 +52,7 @@ namespace cas::math {
         int size() const;
         std::vector<Term*> getSubterms() const;
 
-        virtual void simplify() = 0;
+        virtual Term* simplify() const = 0;
 
         Term* operator[](int index) const;
 

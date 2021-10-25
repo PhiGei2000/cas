@@ -14,6 +14,6 @@ namespace cas::math {
 
         virtual Term* copy() const override;
 
-        virtual void simplify() override;
+        virtual Term* simplify() const override;
     };
 } // namespace cas::math
