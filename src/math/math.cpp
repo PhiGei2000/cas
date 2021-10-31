@@ -17,7 +17,7 @@ namespace cas::math {
 
         int result = 1;
         for (int i = 1; i <= k; i++) {
-            result *= (n + 1 - i) / i
+            result *= (n + 1 - i) / i;
         }
     }
 

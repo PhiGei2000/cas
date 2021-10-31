@@ -1,6 +1,6 @@
 #pragma once
 
-#include "additionTerm.hpp"
-#include "multiplicationTerm.hpp"
-#include "constantTerm.hpp"
-#include "variableTerm.hpp"
+#include "addition.hpp"
+#include "multiplication.hpp"
+#include "constant.hpp"
+#include "variable.hpp"

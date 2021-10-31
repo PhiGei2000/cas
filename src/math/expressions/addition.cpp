@@ -1,19 +1,19 @@
-#include "math/expressions/additionTerm.hpp"
+#include "math/expressions/addition.hpp"
 
-#include "math/expressions/constantTerm.hpp"
+#include "math/expressions/constant.hpp"
 
 namespace cas::math {
-    AdditionTerm::AdditionTerm(const std::initializer_list<Term*>& summands)
+    Addition::Addition(const std::initializer_list<Term*>& summands)
         : OperationTerm(ExpressionType::Addition, summands) {
     }
 
-    AdditionTerm::AdditionTerm(const std::vector<Term*>& summands)
+    Addition::Addition(const std::vector<Term*>& summands)
         : OperationTerm(ExpressionType::Addition, summands) {
     }
 
-    bool AdditionTerm::equals(Term* other) const {
+    bool Addition::equals(Term* other) const {
         if (other->type == ExpressionType::Addition) {
-            AdditionTerm* addition = reinterpret_cast<AdditionTerm*>(other);
+            Addition* addition = reinterpret_cast<Addition*>(other);
 
             std::vector<Term*> subterms = this->subterms;
             auto it = addition->subterms.begin();
@@ -43,8 +43,8 @@ namespace cas::math {
         return false;
     }
 
-    Term* AdditionTerm::copy() const {
-        AdditionTerm* addition = new AdditionTerm({});
+    Term* Addition::copy() const {
+        Addition* addition = new Addition({});
 
         for (const Term* term : subterms) {
             addition->addSubterm(term->copy());
@@ -53,7 +53,7 @@ namespace cas::math {
         return addition;
     }
 
-    std::string AdditionTerm::toString() const {
+    std::string Addition::toString() const {
         std::string result;
 
         for (int i = 0; i < subterms.size(); i++) {
@@ -66,10 +66,10 @@ namespace cas::math {
         return result;
     }
 
-    Term* AdditionTerm::simplify() const {
+    Term* Addition::simplify() const {
         std::vector<Term*> summands = OperationTerm::simplifySubterms(
             [&](double curr, double next) { return curr + next; }, 0);
 
-        return new AdditionTerm(summands);
+        return new Addition(summands);
     }
 } // namespace cas::math

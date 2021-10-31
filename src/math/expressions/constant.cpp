@@ -1,15 +1,15 @@
-#include "math/expressions/constantTerm.hpp"
+#include "math/expressions/constant.hpp"
 
 #include <sstream>
 
 namespace cas::math {
-    ConstantTerm::ConstantTerm(double value)
+    Constant::Constant(double value)
         : value(value), Term(ExpressionType::Constant) {
     }
 
-    bool ConstantTerm::equals(Term* other) const {
+    bool Constant::equals(Term* other) const {
         if (other->type == ExpressionType::Constant) {
-            ConstantTerm* c = reinterpret_cast<ConstantTerm*>(other);
+            Constant* c = reinterpret_cast<Constant*>(other);
 
             return c->value == this->value;
         }
@@ -17,11 +17,11 @@ namespace cas::math {
         return false;
     }
 
-    Term* ConstantTerm::copy() const {
-        return new ConstantTerm(value);
+    Term* Constant::copy() const {
+        return new Constant(value);
     }
 
-    std::string ConstantTerm::toString() const {
+    std::string Constant::toString() const {
         std::stringstream ss;
         ss << value;
 

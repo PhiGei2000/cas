@@ -3,10 +3,10 @@
 #include "term.hpp"
 
 namespace cas::math {
-    struct ConstantTerm : public Term {
+    struct Constant : public Term {
         double value;
 
-        ConstantTerm(double value);
+        Constant(double value);
 
         void add(Term* term) = delete;
 

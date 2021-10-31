@@ -1,19 +1,19 @@
-#include "math/expressions/multiplicationTerm.hpp"
+#include "math/expressions/multiplication.hpp"
 
-#include "math/expressions/additionTerm.hpp"
+#include "math/expressions/addition.hpp"
 
 namespace cas::math {
-    MultiplicationTerm::MultiplicationTerm(const std::initializer_list<Term*>& factors)
+    Multiplication::Multiplication(const std::initializer_list<Term*>& factors)
         : OperationTerm(ExpressionType::Multiplication, factors) {
     }
 
-    MultiplicationTerm::MultiplicationTerm(const std::vector<Term*>& factors)
+    Multiplication::Multiplication(const std::vector<Term*>& factors)
         : OperationTerm(ExpressionType::Multiplication, factors) {
     }
 
-    bool MultiplicationTerm::equals(Term* other) const {
+    bool Multiplication::equals(Term* other) const {
         if (other->type == ExpressionType::Multiplication) {
-            MultiplicationTerm* prod = reinterpret_cast<MultiplicationTerm*>(other);
+            Multiplication* prod = reinterpret_cast<Multiplication*>(other);
 
             std::vector<Term*> subterms = this->subterms;
             auto it = prod->subterms.begin();
@@ -43,8 +43,8 @@ namespace cas::math {
         return false;
     }
 
-    Term* MultiplicationTerm::copy() const {
-        MultiplicationTerm* multiplication = new MultiplicationTerm({});
+    Term* Multiplication::copy() const {
+        Multiplication* multiplication = new Multiplication({});
 
         for (const Term* term : subterms) {
             multiplication->addSubterm(term->copy());
@@ -53,7 +53,7 @@ namespace cas::math {
         return multiplication;
     }
 
-    std::string MultiplicationTerm::toString() const {
+    std::string Multiplication::toString() const {
         std::string result;
 
         for (int i = 0; i < subterms.size(); i++) {
@@ -74,20 +74,20 @@ namespace cas::math {
         return result;
     }
 
-    Term* MultiplicationTerm::simplify() const {
+    Term* Multiplication::simplify() const {
         // simplify subterms
         std::vector<Term*> subterms = OperationTerm::simplifySubterms(
             [&](double curr, double next) { return curr * next; },
             1);
 
         // apply distributive property
-        std::vector<AdditionTerm*> sums;
+        std::vector<Addition*> sums;
 
         for (auto it = subterms.begin(); it != subterms.end();) {
             Term* subterm = *it;
 
             if (subterm->type == ExpressionType::Addition) {
-                sums.push_back(reinterpret_cast<AdditionTerm*>(*it));
+                sums.push_back(reinterpret_cast<Addition*>(*it));
 
                 it = subterms.erase(it);
             }
@@ -97,20 +97,20 @@ namespace cas::math {
         }
 
         if (sums.size() > 0) {
-            AdditionTerm* result = new AdditionTerm(*sums.front());
+            Addition* result = new Addition(*sums.front());
             {
                 auto it = sums.begin() + 1;
                 while (it != sums.end()) {
-                    AdditionTerm* sum = *it;
-                    AdditionTerm* tmp = new AdditionTerm({});
+                    Addition* sum = *it;
+                    Addition* tmp = new Addition({});
 
                     for (auto jt = result->begin(); jt != result->end(); jt++) {
                         Term* summand = *jt;
                         for (auto kt = sum->begin(); kt != sum->end(); kt++) {
                             Term* summand2 = *kt;
-                            MultiplicationTerm* prod = summand->type == ExpressionType::Multiplication
-                                                           ? reinterpret_cast<MultiplicationTerm*>(summand)
-                                                           : new MultiplicationTerm({summand->copy()});
+                            Multiplication* prod = summand->type == ExpressionType::Multiplication
+                                                           ? reinterpret_cast<Multiplication*>(summand)
+                                                           : new Multiplication({summand->copy()});
                             prod->addSubterm(summand2->copy());
 
                             tmp->addSubterm(prod);
@@ -128,6 +128,6 @@ namespace cas::math {
             subterms.push_back(result);
         }
 
-        return new MultiplicationTerm(subterms);
+        return new Multiplication(subterms);
     }
 } // namespace cas::math

@@ -3,12 +3,12 @@
 #include "term.hpp"
 
 namespace cas::math {
-    struct ExponentiationTerm : public Term {
+    struct Exponentiation : public Term {
       public:
         Term* base;
         Term* exponent;
 
-        ExponentiationTerm(Term* base, Term* exponent);
+        Exponentiation(Term* base, Term* exponent);
 
         bool equals(Term* other) const override;
 

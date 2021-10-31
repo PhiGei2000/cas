@@ -1,6 +1,6 @@
 #include "math/expressions/term.hpp"
 
-#include "math/expressions/constantTerm.hpp"
+#include "math/expressions/constant.hpp"
 
 #include <stdexcept>
 
@@ -52,14 +52,14 @@ namespace cas::math {
     }
 
     std::vector<Term*> OperationTerm::simplifySubterms(std::function<double(double, double)> aggreate, double startValue) const {
-        std::vector<ConstantTerm*> constants;
+        std::vector<Constant*> constants;
         std::vector<Term*> subterms;
 
         for (auto it = this->subterms.begin(); it != this->subterms.end(); it++) {
             Term* subterm = (*it)->simplify();
 
             if (subterm->type == ExpressionType::Constant) {
-                constants.push_back(reinterpret_cast<ConstantTerm*>(subterm));
+                constants.push_back(reinterpret_cast<Constant*>(subterm));
             }
             else {
                 subterms.push_back(subterm);
@@ -67,7 +67,7 @@ namespace cas::math {
         }
 
         if (constants.size() > 0) {
-            ConstantTerm* result = new ConstantTerm(startValue);
+            Constant* result = new Constant(startValue);
             for (auto constant : constants) {
                 result->value = aggreate(result->value, constant->value);
 
