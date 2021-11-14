@@ -3,12 +3,12 @@
 #include "term.hpp"
 
 namespace cas::math {
-    struct VariableTerm : public Term {
+    struct Variable : public Term {
       protected:
         char character;
 
       public:
-        VariableTerm(char character);
+        Variable(char character);
 
         char getCharacter() const;
 

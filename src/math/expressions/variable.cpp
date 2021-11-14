@@ -2,17 +2,17 @@
 
 namespace cas::math {
 
-    VariableTerm::VariableTerm(char character)
+    Variable::Variable(char character)
         : character(character), Term(ExpressionType::Variable) {
     }
 
-    char VariableTerm::getCharacter() const {
+    char Variable::getCharacter() const {
         return character;
     }
 
-    bool VariableTerm::equals(Term* other) const {
+    bool Variable::equals(Term* other) const {
         if (other->type == this->type) {
-            VariableTerm* var = reinterpret_cast<VariableTerm*>(other);
+            Variable* var = reinterpret_cast<Variable*>(other);
 
             return var->character == this->character;
         }
@@ -20,11 +20,11 @@ namespace cas::math {
         return false;
     }
 
-    Term* VariableTerm::copy() const {
-        return new VariableTerm(character);
+    Term* Variable::copy() const {
+        return new Variable(character);
     }
 
-    std::string VariableTerm::toString() const {
+    std::string Variable::toString() const {
         std::string result;
 
         result.push_back(character);

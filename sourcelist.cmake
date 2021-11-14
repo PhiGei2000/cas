@@ -7,4 +7,5 @@ SET(SOURCES ${SOURCES}
 ./src/math/expressions/variable.cpp
 ./src/math/expressions/addition.cpp
 ./src/math/math.cpp
+./src/expressionPraser.cpp
 )
