@@ -70,6 +70,12 @@ namespace cas::math {
         std::vector<Term*> summands = OperationTerm::simplifySubterms(
             [&](double curr, double next) { return curr + next; }, 0);
 
+        if (summands.size() == 1) {
+            if (summands.front()->type == ExpressionType::Constant || summands.front()->type == ExpressionType::Variable) {
+                return summands.front();
+            }
+        }
+
         return new Addition(summands);
     }
 } // namespace cas::math
