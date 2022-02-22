@@ -1,12 +1,16 @@
 #pragma once
 
+#include <functional>
 #include <string>
 #include <vector>
-#include <functional>
 
 namespace cas::math {
     enum class ExpressionType {
-      Addition, Multiplication, Exponentiation, Constant, Variable
+        Addition,
+        Multiplication,
+        Exponentiation,
+        Constant,
+        Variable
     };
 
     struct Term {

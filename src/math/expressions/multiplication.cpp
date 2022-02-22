@@ -109,8 +109,8 @@ namespace cas::math {
                         for (auto kt = sum->begin(); kt != sum->end(); kt++) {
                             Term* summand2 = *kt;
                             Multiplication* prod = summand->type == ExpressionType::Multiplication
-                                                           ? reinterpret_cast<Multiplication*>(summand)
-                                                           : new Multiplication({summand->copy()});
+                                                       ? reinterpret_cast<Multiplication*>(summand)
+                                                       : new Multiplication({summand->copy()});
                             prod->addSubterm(summand2->copy());
 
                             tmp->addSubterm(prod);
@@ -126,6 +126,12 @@ namespace cas::math {
 
             result->simplify();
             subterms.push_back(result);
+        }
+
+        if (subterms.size() == 1) {
+            Term* term = subterms[0];
+
+            return term->copy();
         }
 
         return new Multiplication(subterms);

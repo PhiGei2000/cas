@@ -76,7 +76,8 @@
 			"cinttypes": "cpp",
 			"typeinfo": "cpp",
 			"variant": "cpp",
-			"typeindex": "cpp"
+			"typeindex": "cpp",
+			"regex": "cpp"
 		},
 		"editor.formatOnType": true		
 	}
